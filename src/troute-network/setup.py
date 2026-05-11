@@ -42,24 +42,27 @@ flibs = {
 #fc.customize()
 #fc = fc.executables["compiler_f90"][0]
 fc = os.environ['FC'] if 'FC' in os.environ else os.environ['F90'] if 'F90' in os.environ else subprocess.run(['which', 'fc'], capture_output=True).stdout.decode('UTF-8')[:-1]
-result = subprocess.run([fc, '--version'], stdout=subprocess.PIPE)
-result = result.stdout.decode('utf-8')
-if "GNU" in result:
-    fcompiler_type = 'gnu95'
-elif "Intel" in result:
-    fcompiler_type = 'intel'
+fcompiler_type = None
+if fc:
+    result = subprocess.run([fc, '--version'], stdout=subprocess.PIPE)
+    result = result.stdout.decode('utf-8')
+    if "GNU" in result:
+        fcompiler_type = 'gnu95'
+    elif "Intel" in result:
+        fcompiler_type = 'intel'
+if fcompiler_type:
+    print("Fortran compiler type is: {0}".format(fcompiler_type))
 else:
-    raise Exception("Could not identify fortran compiler!")
-print("Fortran compiler type is: {0}".format(fcompiler_type))
+    print("No Fortran compiler found — skipping Fortran-dependent extensions.")
 
 class build_ext_subclass( build_ext ):
     def build_extensions(self):
         for e in self.extensions:
-            if fcompiler_type in fcompopt:
+            if fcompiler_type and fcompiler_type in fcompopt:
                 e.extra_compile_args.extend(fcompopt[fcompiler_type])
-            if fcompiler_type in flinkopt:
+            if fcompiler_type and fcompiler_type in flinkopt:
                 e.extra_link_args.extend(flinkopt[fcompiler_type])
-            if fcompiler_type in flibs:
+            if fcompiler_type and fcompiler_type in flibs:
                 e.libraries.extend(flibs[fcompiler_type])
         build_ext.build_extensions(self)
 
