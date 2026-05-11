@@ -2,7 +2,7 @@
 
 Routes per-catchment Qkrig (kriged streamflow, mm/h) from 21 sub-catchments of gauge 03463300
 (South Toe River Near Celo, NC) directly through t-route Muskingum-Cunge. No CFE involved.
-Uses Kunal's held-out Qkrig files (1400-site NC pipeline).
+Uses held-out Qkrig files (1400-site NC pipeline).
 
 ## Contents
 
