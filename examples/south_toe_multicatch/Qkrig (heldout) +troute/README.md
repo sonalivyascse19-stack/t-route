@@ -24,6 +24,14 @@ cd src/troute-routing && python setup.py build_ext --inplace && cd ../..
 export PYTHONPATH=$(pwd)/src/troute-routing:$PYTHONPATH
 ```
 
+## GPU paths
+
+| Resource | Path |
+|---|---|
+| Hydrofabric GPKG | `/mnt/disk1/usgs_streamflow_allgauges/subdaily_15min/test/gage-03463300_subset.gpkg` |
+| Qkrig CSVs (held-out) | `/mnt/disk2/1400_sites_helene/catchment_ts_03463300/` |
+| USGS obs CSV | `/mnt/disk2/suma_helen_poster/03463300_usgs_hourly_2018_2024.csv` |
+
 ## Run
 
 ```bash

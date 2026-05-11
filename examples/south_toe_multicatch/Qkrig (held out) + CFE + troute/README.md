@@ -7,7 +7,7 @@ CFE runoff from 21 sub-catchments is then routed through t-route Muskingum-Cunge
 ## Contents
 
 - `troute_environment.yml` — conda environment for reproducibility
-- `calibrate_catchment_nwm.py` — DDS calibration script (N=1000 iterations, against held-out Qkrig)
+- `calibrate_catchment_cfe_nwm.py` — DDS calibration script (N=1000 iterations, against held-out Qkrig)
 - `run_route_troute.py` — routing script (reads CFE NPZ outputs, runs t-route MC, plots results)
 - `params/` — best calibration parameters for all 21 catchments (cat-XXXXXXX_best_params.json)
 - `calibration_and_eval_metrics.csv` — per-catchment calibration KGE + routing evaluation metrics
