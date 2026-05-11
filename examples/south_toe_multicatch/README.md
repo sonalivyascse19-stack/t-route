@@ -29,18 +29,22 @@ not direct USGS gauge obs — not a routing issue.
 
 ## Setup
 
-**Use the existing `troute` conda environment on the GPU** — do not create a fresh environment.
-The `troute` env has all required dependencies (numpy, cython, pandas, geopandas, etc.) already installed.
-A fresh env will fail to build `troute-network` due to a subprocess permission issue in setup.py.
-
-The `rfc_reservoirs` build extension in `src/troute-network/setup.py` has been commented out
-because it requires Fortran `netcdff`/`netcdf` libraries not available on this system.
-The existing `troute` env already has t-route built correctly with this change applied.
+Create the conda environment from the included `troute_environment.yml`, then build t-route:
 
 ```bash
+conda env create -f examples/south_toe_multicatch/troute_environment.yml
 conda activate troute
-cd /home/svyas/t-route-ngiab
+cd /path/to/this/repo
+
+python setup.py build_ext --inplace  # in src/troute-network/
+export PYTHONPATH=$(pwd)/src/troute-routing:$PYTHONPATH
 ```
+
+**Notes on setup.py changes:**
+- `src/troute-network/setup.py` and `src/troute-routing/setup.py`: Fortran compiler detection
+  is now optional (gracefully skips if no Fortran compiler found)
+- `src/troute-network/setup.py`: `rfc_reservoirs` extension commented out (requires
+  `netcdff`/`netcdf` Fortran libs not available on this system)
 
 ### Run routing
 
