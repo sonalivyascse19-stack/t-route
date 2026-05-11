@@ -36,7 +36,8 @@ conda env create -f examples/south_toe_multicatch/troute_environment.yml
 conda activate troute
 cd /path/to/this/repo
 
-python setup.py build_ext --inplace  # in src/troute-network/
+cd src/troute-network && python setup.py build_ext --inplace && cd ../..
+cd src/troute-routing && python setup.py build_ext --inplace && cd ../..
 export PYTHONPATH=$(pwd)/src/troute-routing:$PYTHONPATH
 ```
 
@@ -99,8 +100,6 @@ Outputs: `routed_Q_troute_{cal,test}.csv` and `routed_Q_troute_{cal,test}.png`
 
 ## Plots
 
-| File | Description |
-|---|---|
 **Held-in gauge (Run 2 — range100 NPZ Qkrig):**
 
 | File | Description |
