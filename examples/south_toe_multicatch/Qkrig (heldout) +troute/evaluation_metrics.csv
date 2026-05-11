@@ -1,0 +1,3 @@
+period,KGE,NSE,routed_peak_m3s,usgs_peak_m3s
+cal_2020_2022,0.407,0.527,208,396
+test_2023_2024,0.248,0.416,554,1886
