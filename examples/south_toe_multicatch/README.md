@@ -40,11 +40,38 @@ python setup.py build_ext --inplace  # in src/troute-network/
 export PYTHONPATH=$(pwd)/src/troute-routing:$PYTHONPATH
 ```
 
-**Notes on setup.py changes:**
-- `src/troute-network/setup.py` and `src/troute-routing/setup.py`: Fortran compiler detection
-  is now optional (gracefully skips if no Fortran compiler found)
-- `src/troute-network/setup.py`: `rfc_reservoirs` extension commented out (requires
-  `netcdff`/`netcdf` Fortran libs not available on this system)
+## Changes to Sonam's ngiab branch
+
+Only two files were modified from the base `ngiab` branch:
+
+**1. `src/troute-network/setup.py`** — comment out `rfc_reservoirs` extension (requires
+`./libs/bind_rfc.a` static library which is not in the repo) and make Fortran detection optional:
+
+```diff
+-rfc_reservoirs = Extension(
+-    "troute.network.reservoirs.rfc.rfc",
+-    ...
+-)
++#rfc_reservoirs = Extension(
++#    "troute.network.reservoirs.rfc.rfc",
++#    ...
++#)
+
+-ext_modules = [reach, levelpool_reservoirs, rfc_reservoirs, musk]
++ext_modules = [reach, levelpool_reservoirs, musk]
+
+-result = subprocess.run([fc, '--version'], stdout=subprocess.PIPE)
+-if "GNU" in result: fcompiler_type = 'gnu95'
+-elif "Intel" in result: fcompiler_type = 'intel'
+-else: raise Exception("Could not identify fortran compiler!")
++fcompiler_type = None
++if fc:
++    result = subprocess.run([fc, '--version'], stdout=subprocess.PIPE)
++    if "GNU" in result: fcompiler_type = 'gnu95'
++    elif "Intel" in result: fcompiler_type = 'intel'
+```
+
+**2. `src/troute-routing/setup.py`** — same Fortran detection fix (same diff as above, no RFC change needed here).
 
 ### Run routing
 
