@@ -29,20 +29,20 @@ not direct USGS gauge obs — not a routing issue.
 
 ## Setup
 
-### 1. Install t-route (RFC extension disabled)
+**Use the existing `troute` conda environment on the GPU** — do not create a fresh environment.
+The `troute` env has all required dependencies (numpy, cython, pandas, geopandas, etc.) already installed.
+A fresh env will fail to build `troute-network` due to a subprocess permission issue in setup.py.
 
 The `rfc_reservoirs` build extension in `src/troute-network/setup.py` has been commented out
-because it requires Fortran `netcdff`/`netcdf` libraries. Build without it:
+because it requires Fortran `netcdff`/`netcdf` libraries not available on this system.
+The existing `troute` env already has t-route built correctly with this change applied.
 
 ```bash
 conda activate troute
 cd /home/svyas/t-route-ngiab
-
-pip install -e src/troute-network/
-pip install -e src/troute-routing/
 ```
 
-### 2. Run routing
+### Run routing
 
 ```bash
 conda activate troute
@@ -70,6 +70,18 @@ Outputs: `routed_Q_troute_{cal,test}.csv` and `routed_Q_troute_{cal,test}.png`
 
 | File | Description |
 |---|---|
-| `plots/routed_Q_troute_cal.png` | Routed vs USGS — calibration period 2020–2022 |
-| `plots/routed_Q_troute_test.png` | Routed vs USGS — test period Oct 2023–Oct 2024 |
-| `plots/helene_routing_comparison.png` | Hurricane Helene zoom: USGS vs Qkrig vs CFE+t-route |
+**Held-in gauge (Run 2 — range100 NPZ Qkrig):**
+
+| File | Description |
+|---|---|
+| `plots/routed_Q_troute_cal.png` | Routed vs USGS — calibration period 2020–2022 (KGE=0.52, NSE=0.46) |
+| `plots/routed_Q_troute_test.png` | Routed vs USGS — test period Oct 2023–Oct 2024 (KGE=0.26, NSE=0.49) |
+| `plots/helene_routing_comparison.png` | Hurricane Helene zoom: USGS vs Qkrig vs CFE+t-route, routed peak=699 m³/s |
+
+**Held-out gauge (Run 3 — Kunal's NC Qkrig):**
+
+| File | Description |
+|---|---|
+| `plots/run3_routed_Q_troute_cal.png` | Routed vs USGS — calibration period 2020–2022 (KGE=0.359, NSE=0.372) |
+| `plots/run3_routed_Q_troute_test.png` | Routed vs USGS — test period Oct 2023–Oct 2024 (KGE=0.167, NSE=0.417) |
+| `plots/run3_helene_zoom_routing.png` | Hurricane Helene zoom: USGS vs Qkrig vs CFE+t-route, routed peak=688 m³/s |
