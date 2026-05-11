@@ -1,0 +1,28 @@
+## Calibration metrics (per catchment, DDS N=1000, against held-out Qkrig)
+catchment_id,calibration_KGE
+cat-1016279,0.8297
+cat-1016280,0.7880
+cat-1016281,0.7661
+cat-1016282,0.7878
+cat-1016283,0.7461
+cat-1016300,0.7858
+cat-1016301,0.7857
+cat-1016302,0.7442
+cat-1016303,0.7724
+cat-1016304,0.7686
+cat-1016305,0.7757
+cat-1016306,0.7216
+cat-1016307,0.8031
+cat-1016308,0.8067
+cat-1016309,0.7411
+cat-1016310,0.7419
+cat-1016311,0.7455
+cat-1016312,0.7973
+cat-1016313,0.7897
+cat-1016314,0.8238
+cat-1016315,0.8237
+
+## Routing evaluation metrics (routed Q at gauge 03463300 vs USGS obs)
+period,KGE,NSE,routed_peak_m3s,usgs_peak_m3s
+cal_2020_2022,0.359,0.372,,396
+test_2023_2024,0.167,0.417,688,1886
