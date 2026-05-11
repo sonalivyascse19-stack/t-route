@@ -11,7 +11,7 @@ CFE runoff from 21 sub-catchments is then routed through t-route Muskingum-Cunge
 - `run_route_troute.py` — routing script (reads CFE NPZ outputs, runs t-route MC, plots results)
 - `params/` — best calibration parameters for all 21 catchments (cat-XXXXXXX_best_params.json)
 - `calibration_and_eval_metrics.csv` — per-catchment calibration KGE + routing evaluation metrics
-- `plots/` — time series plots (calibration period, test period, Hurricane Helene zoom)
+- `plots/` — time series plots for held-out run (calibration period, test period, Hurricane Helene zoom)
 - `hydrofabric/` — hydrofabric visualisation (coming soon)
 
 ## Setup
@@ -31,7 +31,7 @@ export PYTHONPATH=$(pwd)/src/troute-routing:$PYTHONPATH
 | Resource | Path |
 |---|---|
 | Hydrofabric GPKG | `/mnt/disk1/usgs_streamflow_allgauges/subdaily_15min/test/gage-03463300_subset.gpkg` |
-| CFE results | `/mnt/disk2/suma_helen_poster/catchment_results_range100/` |
+| CFE results (held-out run) | `<path to Run 3 CFE results on GPU>` |
 | USGS obs CSV | `/mnt/disk2/suma_helen_poster/03463300_usgs_hourly_2018_2024.csv` |
 
 ## Run routing
@@ -41,7 +41,7 @@ conda activate troute
 
 python3 run_route_troute.py \
     --gpkg        /mnt/disk1/usgs_streamflow_allgauges/subdaily_15min/test/gage-03463300_subset.gpkg \
-    --results-dir /mnt/disk2/suma_helen_poster/catchment_results_range100 \
+    --results-dir <path to Run 3 CFE results on GPU> \
     --period      cal \
     --obs-csv     /mnt/disk2/suma_helen_poster/03463300_usgs_hourly_2018_2024.csv \
     --out-dir     /mnt/disk2/suma_helen_poster/catchment_results_range100

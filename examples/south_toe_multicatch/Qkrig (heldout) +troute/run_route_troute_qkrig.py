@@ -2,17 +2,11 @@
 """
 run_route_troute_qkrig.py — Route Qkrig from 21 catchments to gauge 03463300
 using t-route's Muskingum-Cunge routing. No CFE involved.
-
-Supports two CSV formats via --fmt:
-  kunal  (default): columns = time, qkrig_mm_hr
-                    path: /mnt/disk2/1400_sites_helene/catchment_ts_03463300
-  own:              columns = datetime, qkrig
-                    path: /mnt/disk2/suma_helen_poster/krig_obs_catchments_range100
+Uses Kunal's held-out Qkrig files (columns: time, qkrig_mm_hr).
 
 Usage:
     conda activate troute
 
-    # Kunal's files
     python3 run_route_troute_qkrig.py \
         --gpkg    /mnt/disk1/usgs_streamflow_allgauges/subdaily_15min/test/gage-03463300_subset.gpkg \
         --krig-dir /mnt/disk2/1400_sites_helene/catchment_ts_03463300 \
@@ -20,15 +14,6 @@ Usage:
         --start   2020-01-01 --end 2022-12-31 \
         --out-dir  /mnt/disk2/suma_helen_poster/qkrig_troute_routing \
         --fmt kunal
-
-    # Our own extract_krig_obs_batch.py files
-    python3 run_route_troute_qkrig.py \
-        --gpkg    /mnt/disk1/usgs_streamflow_allgauges/subdaily_15min/test/gage-03463300_subset.gpkg \
-        --krig-dir /mnt/disk2/suma_helen_poster/krig_obs_catchments_range100 \
-        --obs-csv  /mnt/disk2/suma_helen_poster/03463300_usgs_hourly_2018_2024.csv \
-        --start   2020-01-01 --end 2022-12-31 \
-        --out-dir  /mnt/disk2/suma_helen_poster/qkrig_troute_routing_own \
-        --fmt own
 """
 import argparse
 import sqlite3
